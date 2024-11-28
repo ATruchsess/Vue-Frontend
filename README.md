@@ -1,5 +1,3 @@
-This is a work-in-progress version. Some features, such as Cypress integration, comments, and refactoring, are not fully complete. However, the overall concept and code structure are finalized and will remain unchanged. These areas are simply not as polished as the backend at this stage.
-
 Before you begin, ensure you have the following installed:
 
     Node.js: Download and install Node.js
@@ -8,7 +6,6 @@ Before you begin, ensure you have the following installed:
 
 
 Setup and Installation
-1. Install Dependencies
 
 Run the following command to install all required dependencies:
 ```
@@ -24,3 +21,8 @@ Open cypress to run tests
 ```
 npx cypress open
 ```
+
+The .env file is commited with default values:
+    
+    VITE_BACKEND_ORIGIN=http://localhost:5000
+    VITE_API_TARGET=/api/v1
