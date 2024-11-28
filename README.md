@@ -19,3 +19,8 @@ To start the application in development mode, use:
 ```
 npm run dev
 ```
+
+Open cypress to run tests
+```
+npx cypress open
+```

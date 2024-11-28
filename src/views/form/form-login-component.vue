@@ -13,6 +13,7 @@ const formData = ref({
 const errorMessage = ref('')
 const isSubmitting = ref(false)
 
+//PrimeVue Component to show a toast with a message
 const toast = useToast()
 
 const submitForm = async () => {
@@ -29,7 +30,7 @@ const submitForm = async () => {
       // Fetch current user
       const currentUser = await axios.post(
         backendUrl + '/users/logout',
-        { withCredentials: true }, // Credentials must be included here as well
+        { withCredentials: true }, // Credentials must be included
       )
       console.log(currentUser.data)
     } catch (error) {
@@ -45,16 +46,16 @@ const submitForm = async () => {
       { withCredentials: true }, // Include credentials for login request
     )
 
+    // Reset the form, could also be a function
     formData.value.name = ''
     formData.value.password = ''
 
-    //For testing of all functions to get the protected endpoint, because the UI has no function for this
     if (response.data) {
       try {
         // Fetch current user
         const currentUser = await axios.get(
           backendUrl + '/users/current-user',
-          { withCredentials: true }, // Credentials must be included here as well
+          { withCredentials: true }, // Credentials must be included
         )
         console.log(currentUser.data)
       } catch (error) {
@@ -66,7 +67,7 @@ const submitForm = async () => {
 
     if (toast) {
       toast.add({
-        severity: 'success', // success, info, warn, or error
+        severity: 'success',
         summary: 'Success',
         detail: 'Login successful!',
         life: 5000, // Duration in milliseconds

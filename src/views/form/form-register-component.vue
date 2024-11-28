@@ -14,6 +14,7 @@ const formData = ref({
 const errorMessage = ref('')
 const isSubmitting = ref(false)
 
+//Simple validation of the inputs
 const isNameValid = computed(() => formData.value.name.trim() !== '')
 const isPasswordValid = computed(() => formData.value.password.length >= 8)
 const isPasswordMatch = computed(() => formData.value.password === formData.value.confirmPassword)
@@ -21,6 +22,7 @@ const isFormValid = computed(
   () => isNameValid.value && isPasswordMatch.value && isPasswordValid.value,
 )
 
+//PrimeVue Component to show a toast with a message
 const toast = useToast()
 
 const submitForm = async () => {
@@ -46,7 +48,7 @@ const submitForm = async () => {
 
     if (toast) {
       toast.add({
-        severity: 'success', // success, info, warn, or error
+        severity: 'success',
         summary: 'Success',
         detail: 'Account creation successful!',
         life: 5000, // Duration in milliseconds
@@ -55,17 +57,18 @@ const submitForm = async () => {
       alert('Account creation successful!')
     }
 
-    // Optionally reset the form
+    // Reset the form, could also be a function
     formData.value.name = ''
     formData.value.password = ''
     formData.value.confirmPassword = ''
+    
   } catch (err) {
-    console.error('Submission failed:', err.response?.data || err.message)
+    console.error('Account creation failed:', err.response?.data || err.message)
     if (err.response?.data?.error === 'Database error while creating user') {
       //Alexander von Truchseß 27.11.2024: Better error message from the backend would be nice
       errorMessage.value = 'This username is already taken. Please try a different one.'
     } else {
-      errorMessage.value = 'Submission failed. Please try again later.'
+      errorMessage.value = 'Account creation failed. Please try again later.'
     }
   } finally {
     isSubmitting.value = false
@@ -78,7 +81,7 @@ const submitForm = async () => {
     <h1 class="text-focus">Create a new Account</h1>
 
     <FormField
-      id="formDataName"
+      id="formRegisterName"
       label="Account Name"
       v-model="formData.name"
       :isValid="isNameValid"
@@ -86,7 +89,7 @@ const submitForm = async () => {
     />
 
     <FormField
-      id="formDataPassword"
+      id="formRegisterPassword"
       label="Password"
       type="Password"
       v-model="formData.password"
@@ -95,7 +98,7 @@ const submitForm = async () => {
     />
 
     <FormField
-      id="formDataConfirmPassword"
+      id="formRegisterConfirmPassword"
       label="Confirm Password"
       type="password"
       v-model="formData.confirmPassword"
@@ -103,10 +106,11 @@ const submitForm = async () => {
       errorMessage="Passwords must match"
     />
 
-    <!-- Error Message Display -->
-    <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+    <p id="formRegisterErrorMessage" v-if="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </p>
 
-    <Button type="submit" :disabled="!isFormValid || isSubmitting">
+    <Button id="formRegisterSubmitButton" type="submit" :disabled="!isFormValid || isSubmitting">
       <span v-if="isSubmitting">Submitting...</span>
       <span v-else>Submit</span>
     </Button>
