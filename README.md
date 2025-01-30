@@ -1,3 +1,5 @@
+This project is a Vue application with user authentication. It was created as a prototype to lern about vue, jwt and nodejs.
+
 Before you begin, ensure you have the following installed:
 
     Node.js: Download and install Node.js
